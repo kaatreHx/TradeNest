@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, UserKYC 
+from .models import CustomUser, UserKYC, UserRating 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,5 +15,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
+
+class UserRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserRating
+        fields = '__all__'
 
 

@@ -3,8 +3,8 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response 
 from rest_framework import status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
-from .models import CustomUser 
-from .serializers import RegistrationSerializer, CustomUserSerializer
+from .models import CustomUser, UserRating 
+from .serializers import RegistrationSerializer, CustomUserSerializer, UserRatingSerializer
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from .pagination import CustomPagination
 from rest_framework import filters, viewsets
@@ -86,4 +86,14 @@ class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'put', 'delete']
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'email', 'phone_number']
+    pagination_class = CustomPagination
+
+class UserRatingViewSet(viewsets.ModelViewSet):
+    serializer_class = UserRatingSerializer
+    queryset = UserRating.objects.all()
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    http_method_names = ['get', 'post', 'put', 'delete']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['user__name', 'user__email', 'user__phone_number']
     pagination_class = CustomPagination
