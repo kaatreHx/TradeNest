@@ -22,11 +22,11 @@ class ListingImage(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=user_listing_image_path)
 
-class Cart(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Cart(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+#     quantity = models.IntegerField(default=1)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f'{self.user.name} - {self.listing.title} - {self.quantity}'
+#     def __str__(self):
+#         return f'{self.user.name} - {self.listing.title} - {self.quantity}'
