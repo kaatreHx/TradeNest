@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, UserKYC
+from .models import CustomUser, UserKYC, UserRating
 
 # Register your models here.
 @admin.register(CustomUser)
@@ -43,3 +43,15 @@ class UserKYCAdmin(admin.ModelAdmin):
     'city',
     'document_type',
     )
+
+@admin.register(UserRating)
+class UserRatingAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'rating',
+        'comment',
+        'created_at',
+        'updated_at',
+    )
+    list_filter = ('user', 'rating', 'created_at', 'updated_at')
+    search_fields = ('user', 'comment')
