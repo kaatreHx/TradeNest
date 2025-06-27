@@ -32,6 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True) #For user banned
+    is_online = models.BooleanField(default=False) #For online status
     is_staff = models.BooleanField(default=False)
     is_vendor = models.BooleanField(default=False) #Vendor->False is customer
     is_superuser = models.BooleanField(default=False)
