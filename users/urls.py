@@ -5,8 +5,8 @@ from .views import LoginView, RegisterView, LogoutView, UserViewSet, UserRatingV
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'user-ratings', UserRatingViewSet)
+router.register(r'users', UserViewSet, basename='users')
+router.register(r'user-ratings', UserRatingViewSet, basename='user-ratings')
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
