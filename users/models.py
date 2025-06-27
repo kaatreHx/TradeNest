@@ -75,5 +75,13 @@ class UserKYC(models.Model):
     def __str__(self):
         return f"KYC for {self.user.name}"
 
+class UserRating(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"Rating for {self.user.name}"
 
