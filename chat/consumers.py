@@ -14,6 +14,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if self.scope["user"].id not in [self.user1_id, self.user2_id]:
             await self.close()
 
+        #Generating constan roo_name
         self.room_name = f"chat_{min(self.user1_id, self.user2_id)}_{max(self.user1_id, self.user2_id)}"
 
         await self.channel_layer.group_add(
@@ -31,6 +32,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     #While getting data from front-end data are in json format and vice versa
     async def receive(self, text_data):
+        #Handling Error
         try:
             text_data_json = json.loads(text_data)
             message = text_data_json['message']
@@ -46,6 +48,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             else:
                 receiver_id = self.user1_id
 
+            #Saving message
             await self.save_message(
                 sender_id=sender_id,
                 receiver_id=receiver_id,
@@ -53,6 +56,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 room_name=self.room_name
             )
 
+            #Sending message to room
             await self.channel_layer.group_send(
                 self.room_name,
                 {
@@ -69,6 +73,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }))
 
     async def chat_message(self, event):
+        #Sending message to client
         await self.send(text_data=json.dumps({
             'message': event['message'],
             'sender': event['sender'],
@@ -76,8 +81,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
 
-    @database_sync_to_async
+
+    @database_sync_to_async #It is a decorator in django channels. It is used to safely call synchronous Django ORM code from within an asynchronous context as we know our consumer is Async
     def save_message(self, sender_id, receiver_id, message, room_name):
+        #Handling Error
         try:
             ChatModel.objects.create(
                 sender_id=sender_id,
