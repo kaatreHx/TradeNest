@@ -38,7 +38,7 @@ class LoginView(APIView):
                     'phone_number': user.phone_number,
                     'is_vendor': user.is_vendor
                 }
-            })
+            }, status=status.HTTP_200_OK)
         
         return Response({
             'detail': 'Invalid credentials'
