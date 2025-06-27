@@ -14,7 +14,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if self.scope["user"].id not in [self.user1_id, self.user2_id]:
             await self.close()
 
-        #Generating constan roo_name
+        #Generating constan room_name
         self.room_name = f"chat_{min(self.user1_id, self.user2_id)}_{max(self.user1_id, self.user2_id)}"
 
         await self.channel_layer.group_add(
