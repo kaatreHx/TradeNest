@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'daphne',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'users',
     'listings',
+    'chat',
 ]
 
 REST_FRAMEWORK = {
@@ -65,6 +68,15 @@ REST_FRAMEWORK = {
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
 }
 
 from datetime import timedelta
@@ -106,7 +118,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'marketplace.wsgi.application'
+# WSGI_APPLICATION = 'marketplace.wsgi.application'
+ASGI_APPLICATION = 'marketplace.asgi.application'
 
 
 # Database
